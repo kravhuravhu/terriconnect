@@ -39,12 +39,13 @@ class TiltedCard extends StatelessWidget {
           ],
         ),
         child: Stack(
+          clipBehavior: Clip.none,
           children: [
             child,
             if (badgeText != null)
               Positioned(
-                top: -12,
-                right: -12,
+                top: -30,
+                right: -20,
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
@@ -60,7 +61,7 @@ class TiltedCard extends StatelessWidget {
                   child: Text(
                     badgeText!,
                     style: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 7,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFFFF6522),
                     ),
