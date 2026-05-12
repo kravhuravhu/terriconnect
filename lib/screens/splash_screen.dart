@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen>
     _animationController.forward();
     
     // Navigate to home after 3 seconds
-    Timer(const Duration(seconds: 90), () {
+    Timer(const Duration(seconds: 3), () {
       if (mounted) {
         Navigator.pushReplacement(
           context,
@@ -117,148 +117,158 @@ class _SplashScreenState extends State<SplashScreen>
                   opacity: _fadeAnimation,
                   child: ScaleTransition(
                     scale: _scaleAnimation,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Logo
-                        Container(
-                          width: 100,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.school_rounded,
-                            size: 50,
-                            color: isDark ? AppTheme.primaryOrange : Colors.white,
-                          ),
+                    child: SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: MediaQuery.of(context).size.height -
+                              MediaQuery.of(context).padding.top -
+                              MediaQuery.of(context).padding.bottom,
                         ),
-                        const SizedBox(height: 32),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // Logo
+                            Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.2),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.school_rounded,
+                                size: 50,
+                                color: isDark ? AppTheme.primaryOrange : Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 32),
                         
-                        // Tilted Cards Section
-                        SizedBox(
-                          height: 200,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              // Back card (tilted left)
-                              Positioned(
-                                left: -30,
-                                top: 20,
-                                child: TiltedCard(
-                                  tiltAngle: -0.15,
-                                  color: isDark 
-                                      ? const Color(0xFF2C2C3E)
-                                      : Colors.white.withOpacity(0.95),
-                                  child: Column(
-                                    children: [
-                                      Icon(
-                                        Icons.auto_awesome,
-                                        size: 32,
-                                        color: AppTheme.primaryOrange,
+                            // Tilted Cards Section
+                            SizedBox(
+                              height: 200,
+                              child: Stack(
+                                clipBehavior: Clip.none, 
+                                alignment: Alignment.center,
+                                children: [
+                                  // Back card (tilted left)
+                                  Positioned(
+                                    left: 90,
+                                    top: 20,
+                                    child: TiltedCard(
+                                      tiltAngle: -0.15,
+                                      color: isDark 
+                                          ? const Color(0xFF2C2C3E)
+                                          : Colors.white.withOpacity(0.95),
+                                      child: Column(
+                                        children: [
+                                          Icon(
+                                            Icons.auto_awesome,
+                                            size: 32,
+                                            color: AppTheme.primaryOrange,
+                                          ),
+                                          const SizedBox(height: 8),
+                                          Text(
+                                            'YOUR\nFUTURE',
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.ubuntu(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: isDark ? Colors.white : Colors.black87,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        'YOUR\nFUTURE',
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.ubuntu(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: isDark ? Colors.white : Colors.black87,
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ),
-                              
-                              // Front card (tilted right) - with ADMITTED
-                              Positioned(
-                                right: -30,
-                                bottom: 20,
-                                child: TiltedCard(
-                                  tiltAngle: 0.15,
-                                  color: AppTheme.primaryOrange,
-                                  badgeText: '✨ NEW',
-                                  child: Column(
-                                    children: [
-                                      Icon(
-                                        Icons.celebration,
-                                        size: 32,
-                                        color: Colors.white,
+                                  
+                                  // Front card (tilted right)
+                                  Positioned(
+                                    right: 90,
+                                    bottom: 20,
+                                    child: TiltedCard(
+                                      tiltAngle: 0.15,
+                                      color: AppTheme.primaryOrange,
+                                      badgeText: '✨NEW',
+                                      child: Column(
+                                        children: [
+                                          Icon(
+                                            Icons.celebration,
+                                            size: 32,
+                                            color: Colors.white,
+                                          ),
+                                          const SizedBox(height: 4),
+                                          Text(
+                                            'ADMITTED!',
+                                            style: GoogleFonts.ubuntu(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 4),
+                                          Text(
+                                            'You qualify!',
+                                            style: GoogleFonts.ubuntu(
+                                              fontSize: 10,
+                                              color: Colors.white70,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        'ADMITTED!',
-                                        style: GoogleFonts.ubuntu(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        'You qualify!',
-                                        style: GoogleFonts.ubuntu(
-                                          fontSize: 10,
-                                          color: Colors.white70,
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                        
-                        const SizedBox(height: 40),
-                        
-                        // App Name
-                        Text(
-                          'TerriConnect',
-                          style: GoogleFonts.ubuntu(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            color: isDark ? AppTheme.primaryOrange : Colors.white,
-                            shadows: [
-                              Shadow(
-                                blurRadius: 10,
-                                color: Colors.black.withOpacity(0.2),
+                            ),
+                            
+                            const SizedBox(height: 40),
+                            
+                            // App Name
+                            Text(
+                              'TerriConnect',
+                              style: GoogleFonts.ubuntu(
+                                fontSize: 32,
+                                fontWeight: FontWeight.bold,
+                                color: isDark ? AppTheme.primaryOrange : Colors.white,
+                                shadows: [
+                                  Shadow(
+                                    blurRadius: 10,
+                                    color: Colors.black.withOpacity(0.2),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Connect to Your Future',
+                              style: GoogleFonts.ubuntu(
+                                fontSize: 14,
+                                color: isDark ? Colors.white70 : Colors.white.withOpacity(0.9),
+                              ),
+                            ),
+                            
+                            const SizedBox(height: 48),
+                            
+                            // Loading indicator
+                            CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                isDark ? AppTheme.primaryOrange : Colors.white,
+                              ),
+                              strokeWidth: 2,
+                            ),
+                            
+                            const SizedBox(height: 16),
+                            
+                            Text(
+                              'Checking your eligibility...',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: isDark ? Colors.white54 : Colors.white70,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Connect to Your Future',
-                          style: GoogleFonts.ubuntu(
-                            fontSize: 14,
-                            color: isDark ? Colors.white70 : Colors.white.withOpacity(0.9),
-                          ),
-                        ),
-                        
-                        const SizedBox(height: 48),
-                        
-                        // Loading indicator
-                        CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            isDark ? AppTheme.primaryOrange : Colors.white,
-                          ),
-                          strokeWidth: 2,
-                        ),
-                        
-                        const SizedBox(height: 16),
-                        
-                        Text(
-                          'Checking your eligibility...',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: isDark ? Colors.white54 : Colors.white70,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
