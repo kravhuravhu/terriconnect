@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../theme/app_theme.dart';
 import 'aps_calculator_screen.dart';
 import 'universities_screen.dart';
@@ -230,7 +231,7 @@ class HomeScreen extends StatelessWidget {
                     const SizedBox(height: 12),
                     // Copyright text
                     Text(
-                      '© 2025 TerriConnect | Connect to Your Future',
+                      '© 2026 TerriConnect | Connect to Your Future',
                       style: GoogleFonts.ubuntu(
                         fontSize: 10,
                         color: isDark ? Colors.white38 : Colors.white70,
@@ -593,7 +594,7 @@ class HomeScreen extends StatelessWidget {
         _buildSupportItem(
           Icons.email,
           'Email Support',
-          'support@terriconnect.com',
+          'info@arrithnius.co.za',
           '24-48 hour response',
           isDark,
         ),
@@ -601,7 +602,7 @@ class HomeScreen extends StatelessWidget {
         _buildSupportItem(
           Icons.language,
           'Website',
-          'www.terriconnect.com',
+          'www.arrithnius.co.za',
           'Updates and resources',
           isDark,
         ),
@@ -702,10 +703,10 @@ class HomeScreen extends StatelessWidget {
         const SizedBox(height: 20),
         Row(
           children: [
-            _buildShareOption(Icons.chat, 'WhatsApp', const Color(0xFF25D366)),
-            _buildShareOption(Icons.facebook, 'Facebook', const Color(0xFF1877F2)),
+            _buildShareOption(FontAwesomeIcons.whatsapp, 'WhatsApp', const Color(0xFF25D366)),
+            _buildShareOption(FontAwesomeIcons.linkedin, 'Linkedin', const Color(0xFF1877F2)),
             _buildShareOption(Icons.email, 'Email', const Color(0xFFD44638)),
-            _buildShareOption(Icons.copy, 'Copy Link', AppTheme.primaryOrange),
+            _buildShareOption(FontAwesomeIcons.copy, 'Copy Link', AppTheme.primaryOrange),
           ],
         ),
         const SizedBox(height: 12),
