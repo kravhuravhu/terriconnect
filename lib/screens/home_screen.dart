@@ -5,6 +5,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../theme/app_theme.dart';
 import 'aps_calculator_screen.dart';
 import 'universities_screen.dart';
+import '../utils/animations.dart';
+import '../utils/haptics.dart';
+import '../widgets/animated_card.dart';
+import '../widgets/animated_toast.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -133,6 +137,7 @@ class HomeScreen extends StatelessWidget {
                         title: 'APS\nCalculator',
                         subtitle: 'Calculate your score',
                         onTap: () {
+                          Haptics.medium(); 
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (_) => const ApsCalculatorScreen()),

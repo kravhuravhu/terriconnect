@@ -19,6 +19,10 @@ class TerriConnect extends StatelessWidget {
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
       home: const SplashScreen(),
+      // Global nav with animations
+      onGenerateRoute: (settings) {
+        return null;
+      },
     );
   }
 }
