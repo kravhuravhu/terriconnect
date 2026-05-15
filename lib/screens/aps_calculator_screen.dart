@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
+import '../utils/animations.dart';
+import '../utils/haptics.dart';
+import '../widgets/animated_toast.dart';
 
 class ApsCalculatorScreen extends StatefulWidget {
   const ApsCalculatorScreen({super.key});
@@ -9,7 +12,11 @@ class ApsCalculatorScreen extends StatefulWidget {
   State<ApsCalculatorScreen> createState() => _ApsCalculatorScreenState();
 }
 
-class _ApsCalculatorScreenState extends State<ApsCalculatorScreen> {
+class _ApsCalculatorScreenState extends State<ApsCalculatorScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
+  
   final List<String> subjects = [
     'English Home Language',
     'English First Additional',
@@ -35,6 +42,18 @@ class _ApsCalculatorScreenState extends State<ApsCalculatorScreen> {
   @override
   void initState() {
     super.initState();
+    
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+    
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
+    );
+    
+    _animationController.forward();
+    
     for (var subject in subjects) {
       _controllers[subject] = TextEditingController();
     }
@@ -42,6 +61,7 @@ class _ApsCalculatorScreenState extends State<ApsCalculatorScreen> {
 
   @override
   void dispose() {
+    _animationController.dispose();
     for (var controller in _controllers.values) {
       controller.dispose();
     }
@@ -64,6 +84,7 @@ class _ApsCalculatorScreenState extends State<ApsCalculatorScreen> {
   }
 
   void _showResults() {
+    Haptics.medium();
     int aps = _calculateAps();
     setState(() {
       _calculatedAps = aps.toString();
@@ -81,169 +102,172 @@ class _ApsCalculatorScreenState extends State<ApsCalculatorScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('APS Calculator'),
-        backgroundColor: Colors.transparent,
-        foregroundColor: AppTheme.primaryOrange,
-        elevation: 0,
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: isDark
-              ? const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color(0xFF1A1A2E),
-                    Color(0xFF16213E),
-                  ],
-                )
-              : const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    AppTheme.primaryOrange,
-                    Color(0xFFFF8C42),
-                  ],
-                ),
+    return FadeTransition(
+      opacity: _fadeAnimation,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('APS Calculator'),
+          backgroundColor: Colors.transparent,
+          foregroundColor: AppTheme.primaryOrange,
+          elevation: 0,
         ),
-        child: Column(
-          children: [
-            // Header
-            Container(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                children: [
-                  Container(
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.calculate_rounded,
-                      size: 35,
-                      color: Colors.white,
-                    ),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: isDark
+                ? const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFF1A1A2E),
+                      Color(0xFF16213E),
+                    ],
+                  )
+                : const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      AppTheme.primaryOrange,
+                      Color(0xFFFF8C42),
+                    ],
                   ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'APS Calculator',
-                    style: GoogleFonts.ubuntu(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Enter your subject marks (0-100)',
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.white.withOpacity(0.8),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            
-            // Subject list
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: isDark ? const Color(0xFF1E1E2E) : Colors.white,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
-                ),
-                child: ListView.builder(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: subjects.length,
-                  itemBuilder: (context, index) {
-                    final subject = subjects[index];
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          ),
+          child: Column(
+            children: [
+              // Header
+              Container(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 70,
+                      height: 70,
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF2C2C3E) : Colors.grey.shade50,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
+                        color: Colors.white.withOpacity(0.2),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.calculate_rounded,
+                        size: 35,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      'APS Calculator',
+                      style: GoogleFonts.ubuntu(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Enter your subject marks (0-100)',
+                      style: GoogleFonts.ubuntu(
+                        fontSize: 13,
+                        color: Colors.white.withOpacity(0.8),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              
+              // Subject list
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: isDark ? const Color(0xFF1E1E2E) : Colors.white,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
+                  ),
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: subjects.length,
+                    itemBuilder: (context, index) {
+                      final subject = subjects[index];
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: isDark ? const Color(0xFF2C2C3E) : Colors.grey.shade50,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
+                          ),
                         ),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              subject,
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: isDark ? Colors.white : Colors.black87,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                subject,
+                                style: GoogleFonts.ubuntu(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: isDark ? Colors.white : Colors.black87,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 80,
-                            child: TextField(
-                              controller: _controllers[subject],
-                              keyboardType: TextInputType.number,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: AppTheme.primaryOrange,
-                              ),
-                              decoration: InputDecoration(
-                                hintText: '0',
-                                hintStyle: TextStyle(
-                                  color: isDark ? Colors.grey.shade600 : Colors.grey.shade400,
+                            SizedBox(
+                              width: 80,
+                              child: TextField(
+                                controller: _controllers[subject],
+                                keyboardType: TextInputType.number,
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.ubuntu(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppTheme.primaryOrange,
                                 ),
-                                filled: true,
-                                fillColor: isDark ? const Color(0xFF1E1E2E) : Colors.white,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide.none,
+                                decoration: InputDecoration(
+                                  hintText: '0',
+                                  hintStyle: GoogleFonts.ubuntu(
+                                    color: isDark ? Colors.grey.shade600 : Colors.grey.shade400,
+                                  ),
+                                  filled: true,
+                                  fillColor: isDark ? const Color(0xFF1E1E2E) : Colors.white,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
                                 ),
-                                contentPadding: const EdgeInsets.symmetric(vertical: 12),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-            
-            // Calculate button
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: ElevatedButton(
-                onPressed: _showResults,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: AppTheme.primaryOrange,
-                  minimumSize: const Size(double.infinity, 55),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  elevation: 4,
-                ),
-                child: const Text(
-                  'CALCULATE APS',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
-            ),
-          ],
+              
+              // Calculate button
+              Padding(
+                padding: const EdgeInsets.all(24),
+                child: ElevatedButton(
+                  onPressed: _showResults,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: AppTheme.primaryOrange,
+                    minimumSize: const Size(double.infinity, 55),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    elevation: 4,
+                  ),
+                  child: Text(
+                    'CALCULATE APS',
+                    style: GoogleFonts.ubuntu(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -325,7 +349,7 @@ class _ResultBottomSheet extends StatelessWidget {
               children: [
                 Text(
                   'Your APS Score',
-                  style: TextStyle(
+                  style: GoogleFonts.ubuntu(
                     fontSize: 14,
                     color: Colors.white.withOpacity(0.9),
                   ),
@@ -360,7 +384,7 @@ class _ResultBottomSheet extends StatelessWidget {
             child: Text(
               message,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: GoogleFonts.ubuntu(
                 fontSize: 14,
                 color: isDark ? Colors.white70 : Colors.black87,
               ),
@@ -376,7 +400,10 @@ class _ResultBottomSheet extends StatelessWidget {
               children: [
                 Expanded(
                   child: OutlinedButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      Haptics.light();
+                      Navigator.pop(context);
+                    },
                     style: OutlinedButton.styleFrom(
                       foregroundColor: AppTheme.primaryOrange,
                       side: BorderSide(color: AppTheme.primaryOrange),
@@ -385,15 +412,23 @@ class _ResultBottomSheet extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text('Close'),
+                    child: Text(
+                      'Close',
+                      style: GoogleFonts.ubuntu(),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
+                      Haptics.medium();
                       Navigator.pop(context);
-                      // Navigate to universities
+                      AnimatedToast.show(
+                        context: context,
+                        message: 'Universities feature coming soon!',
+                        icon: Icons.school,
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppTheme.primaryOrange,
@@ -403,7 +438,10 @@ class _ResultBottomSheet extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text('Find Universities'),
+                    child: Text(
+                      'Find Universities',
+                      style: GoogleFonts.ubuntu(),
+                    ),
                   ),
                 ),
               ],
