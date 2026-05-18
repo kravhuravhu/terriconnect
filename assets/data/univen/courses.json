@@ -1,0 +1,1132 @@
+{
+  "universityId": "univen",
+  "academicYear": "2027",
+  "courses": [
+    {
+      "id": "ba_media_studies",
+      "name": "BA Media Studies",
+      "facultyId": "humanities",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 30,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "African Languages", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "ba_general",
+      "name": "Bachelor of Arts",
+      "facultyId": "humanities",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 30,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "ba_development_studies",
+      "name": "BA Development Studies",
+      "facultyId": "humanities",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 30,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "History", "minMark": 50},
+          {"name": "Economics", "minMark": 50}
+        ],
+        "anyOf": [
+          {"name": "History", "minMark": 50},
+          {"name": "Economics", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "ba_indigenous_knowledge",
+      "name": "BA Indigenous Knowledge Systems",
+      "facultyId": "humanities",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 30,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "ba_language_practice",
+      "name": "BA Language Practice",
+      "facultyId": "humanities",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 30,
+      "requirements": {
+        "subjects": [
+          {"name": "African Language", "minMark": 50},
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "ba_english_literature",
+      "name": "BA English Language and Literature",
+      "facultyId": "humanities",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 30,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "ba_international_relations",
+      "name": "BA International Relations",
+      "facultyId": "humanities",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 30,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "History", "minMark": 50},
+          {"name": "Economics", "minMark": 50}
+        ],
+        "anyOf": [
+          {"name": "History", "minMark": 50},
+          {"name": "Economics", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "ba_youth_development",
+      "name": "BA Youth Development",
+      "facultyId": "humanities",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 30,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "ba_history",
+      "name": "BA History",
+      "facultyId": "humanities",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 30,
+      "requirements": {
+        "subjects": [
+          {"name": "History", "minMark": 50},
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "ba_theology",
+      "name": "Bachelor of Theology",
+      "facultyId": "humanities",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 30,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "higher_cert_music",
+      "name": "Higher Certificate in Music",
+      "facultyId": "humanities",
+      "qualification": "Certificate",
+      "duration": 1,
+      "minAps": null,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "b_social_work",
+      "name": "Bachelor of Social Work",
+      "facultyId": "humanities",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 35,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "b_ed_senior_fet",
+      "name": "BEd Senior Phase and FET",
+      "facultyId": "humanities",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 36,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ],
+        "streams": [
+          {
+            "name": "Science",
+            "anyOf": [
+              {"name": "Mathematics", "minMark": 50},
+              {"name": "Physical Sciences", "minMark": 50},
+              {"name": "Life Sciences", "minMark": 50}
+            ],
+            "requiredCount": 2
+          },
+          {
+            "name": "Commerce",
+            "anyOf": [
+              {"name": "Accounting", "minMark": 50},
+              {"name": "Business Studies", "minMark": 50},
+              {"name": "Economics", "minMark": 50}
+            ],
+            "requiredCount": 2
+          },
+          {
+            "name": "Humanities",
+            "anyOf": [
+              {"name": "History", "minMark": 50},
+              {"name": "Geography", "minMark": 50},
+              {"name": "Sepedi", "minMark": 50},
+              {"name": "Tshivenda", "minMark": 50},
+              {"name": "Xitsonga", "minMark": 50}
+            ],
+            "requiredCount": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "b_ed_foundation",
+      "name": "BEd Foundation Phase",
+      "facultyId": "humanities",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 36,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Tshivenda", "minMark": 50},
+          {"name": "Sepedi", "minMark": 50},
+          {"name": "Xitsonga", "minMark": 50}
+        ],
+        "mathRequirements": {
+          "anyOf": [
+            {"name": "Mathematics Literacy", "minMark": 50},
+            {"name": "Mathematics", "minMark": 40}
+          ]
+        }
+      }
+    },
+    {
+      "id": "b_nursing",
+      "name": "Bachelor of Nursing",
+      "facultyId": "health",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 38,
+      "requirements": {
+        "subjects": [
+          {"name": "Life Sciences", "minMark": 60},
+          {"name": "English", "minMark": 60},
+          {"name": "Physical Sciences", "minMark": 60},
+          {"name": "Mathematics", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bsc_nutrition",
+      "name": "BSc Nutrition",
+      "facultyId": "health",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 34,
+      "requirements": {
+        "subjects": [
+          {"name": "Life Sciences", "minMark": 50},
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50}
+        ],
+        "anyOf": [
+          {"name": "Physical Sciences", "minMark": 50},
+          {"name": "Agricultural Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bsc_sports_exercise",
+      "name": "BSc Sports and Exercise Science",
+      "facultyId": "health",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 34,
+      "requirements": {
+        "subjects": [
+          {"name": "Life Sciences", "minMark": 50},
+          {"name": "English", "minMark": 50},
+          {"name": "Physical Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bsc_biokinetics",
+      "name": "BSc Biokinetics",
+      "facultyId": "health",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 34,
+      "requirements": {
+        "subjects": [
+          {"name": "Life Sciences", "minMark": 50},
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bsc_recreation",
+      "name": "BSc Recreation and Leisure Studies",
+      "facultyId": "health",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 34,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "b_psychology",
+      "name": "Bachelor of Psychology",
+      "facultyId": "health",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 36,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ],
+        "extra": "Selection test required"
+      }
+    },
+    {
+      "id": "diploma_nursing",
+      "name": "Diploma in Nursing",
+      "facultyId": "health",
+      "qualification": "Diploma",
+      "duration": 3,
+      "minAps": 28,
+      "requirements": {
+        "subjects": [
+          {"name": "Life Sciences", "minMark": 50},
+          {"name": "English", "minMark": 50},
+          {"name": "Physical Sciences", "minMark": 50},
+          {"name": "Mathematics", "minMark": 40}
+        ]
+      }
+    },
+    {
+      "id": "b_admin_public",
+      "name": "BAdmin Public Administration",
+      "facultyId": "commerce",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 32,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ],
+        "anyThree": {
+          "minMark": 40,
+          "subjects": ["Accounting", "Business Studies", "Economics", "History", "Geography"]
+        }
+      }
+    },
+    {
+      "id": "bcom_accounting_sciences",
+      "name": "BCom Accounting Sciences",
+      "facultyId": "commerce",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 35,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bcom_tourism",
+      "name": "BCom Tourism Management",
+      "facultyId": "commerce",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 32,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ],
+        "mathRequirements": {
+          "anyOf": [
+            {"name": "Mathematical Literacy", "minMark": 50},
+            {"name": "Mathematics", "minMark": 40}
+          ]
+        },
+        "anyTwo": {
+          "minMark": 40,
+          "subjects": ["Accounting", "Business Studies", "Economics", "Information Technology", "Geography", "Tourism"]
+        }
+      }
+    },
+    {
+      "id": "bcom_accounting",
+      "name": "BCom Accounting",
+      "facultyId": "commerce",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 32,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ],
+        "anyOf": [
+          {"name": "Accounting", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bcom_bis",
+      "name": "BCom Business Information Systems",
+      "facultyId": "commerce",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 32,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ],
+        "mathRequirements": {
+          "anyOf": [
+            {"name": "Mathematics", "minMark": 40},
+            {"name": "Mathematical Literacy", "minMark": 75}
+          ]
+        },
+        "anyTwo": {
+          "minMark": 40,
+          "subjects": ["Accounting", "Business Studies", "Economics", "Information Technology", "Computer Studies"]
+        }
+      }
+    },
+    {
+      "id": "bcom_business_management",
+      "name": "BCom Business Management",
+      "facultyId": "commerce",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 32,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Business Studies", "minMark": 50}
+        ],
+        "anyTwo": {
+          "minMark": 40,
+          "subjects": ["Accounting", "Economics", "Information Technology", "Mathematics"]
+        }
+      }
+    },
+    {
+      "id": "bcom_cost_management",
+      "name": "BCom Cost and Management Accounting",
+      "facultyId": "commerce",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 32,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ],
+        "anyOf": [
+          {"name": "Accounting", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bcom_economics",
+      "name": "BCom Economics",
+      "facultyId": "commerce",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 32,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ],
+        "anyOf": [
+          {"name": "Economics", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50}
+        ],
+        "anyTwo": {
+          "minMark": 40,
+          "subjects": ["Accounting", "Business Studies", "Information Technology"]
+        }
+      }
+    },
+    {
+      "id": "bcom_hrm",
+      "name": "BCom Human Resource Management",
+      "facultyId": "commerce",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 32,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ],
+        "anyTwo": {
+          "minMark": 40,
+          "subjects": ["Accounting", "Business Studies", "Economics", "Information Technology", "Mathematics"]
+        }
+      }
+    },
+    {
+      "id": "bcom_industrial_psych",
+      "name": "BCom Industrial Psychology",
+      "facultyId": "commerce",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 32,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ],
+        "anyTwo": {
+          "minMark": 40,
+          "subjects": ["Accounting", "Business Studies", "Economics", "Information Technology", "Mathematics"]
+        }
+      }
+    },
+    {
+      "id": "llb",
+      "name": "Bachelor of Laws (LLB)",
+      "facultyId": "commerce",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 38,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 60}
+        ]
+      }
+    },
+    {
+      "id": "ba_criminal_justice",
+      "name": "BA Criminal Justice",
+      "facultyId": "commerce",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 34,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "extended_b_admin",
+      "name": "Extended BAdmin (4 years)",
+      "facultyId": "commerce",
+      "qualification": "Degree (Extended)",
+      "duration": 4,
+      "minAps": 28,
+      "maxAps": 31,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "extended_bcom_accounting",
+      "name": "Extended BCom Accounting (4 years)",
+      "facultyId": "commerce",
+      "qualification": "Degree (Extended)",
+      "duration": 4,
+      "minAps": 28,
+      "maxAps": 31,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "extended_bcom_bis",
+      "name": "Extended BCom Business Information Systems (4 years)",
+      "facultyId": "commerce",
+      "qualification": "Degree (Extended)",
+      "duration": 4,
+      "minAps": 28,
+      "maxAps": 31,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "extended_bcom_business",
+      "name": "Extended BCom Business Management (4 years)",
+      "facultyId": "commerce",
+      "qualification": "Degree (Extended)",
+      "duration": 4,
+      "minAps": 28,
+      "maxAps": 31,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "extended_bcom_cost",
+      "name": "Extended BCom Cost and Management Accounting (4 years)",
+      "facultyId": "commerce",
+      "qualification": "Degree (Extended)",
+      "duration": 4,
+      "minAps": 28,
+      "maxAps": 31,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "extended_bcom_economics",
+      "name": "Extended BCom Economics (4 years)",
+      "facultyId": "commerce",
+      "qualification": "Degree (Extended)",
+      "duration": 4,
+      "minAps": 28,
+      "maxAps": 31,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "extended_bcom_hrm",
+      "name": "Extended BCom Human Resource Management (4 years)",
+      "facultyId": "commerce",
+      "qualification": "Degree (Extended)",
+      "duration": 4,
+      "minAps": 28,
+      "maxAps": 31,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "diploma_freshwater",
+      "name": "Diploma in Freshwater Technology",
+      "facultyId": "science",
+      "qualification": "Diploma",
+      "duration": 3,
+      "minAps": 24,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 30}
+        ],
+        "anyOne": {
+          "minMark": 50,
+          "subjects": ["Life Sciences", "Agricultural Sciences", "Physical Sciences", "Geography"]
+        }
+      }
+    },
+    {
+      "id": "bsc_general",
+      "name": "Bachelor of Science (General)",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bsc_biochem_micro",
+      "name": "BSc Biochemistry and Microbiology",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bsc_biochem_bio",
+      "name": "BSc Biochemistry and Biology",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bsc_micro_botany",
+      "name": "BSc Microbiology and Botany",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bsc_math_applied",
+      "name": "BSc Mathematics and Applied Mathematics",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bsc_math_physics",
+      "name": "BSc Mathematics and Physics",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bsc_math_stats",
+      "name": "BSc Mathematics and Statistics",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bsc_physics_chem",
+      "name": "BSc Physics and Chemistry",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bsc_chem_math",
+      "name": "BSc Chemistry and Mathematics",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bsc_chem_biochem",
+      "name": "BSc Chemistry and Biochemistry",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bsc_chem_applied",
+      "name": "BSc Chemistry and Applied Chemistry",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bsc_botany_zoology",
+      "name": "BSc Botany and Zoology",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bsc_computer_science",
+      "name": "BSc Computer Science",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bsc_cs_math",
+      "name": "BSc Computer Science and Mathematics",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "b_env_science",
+      "name": "Bachelor of Environmental Sciences",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 3,
+      "minAps": 32,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50}
+        ],
+        "anyOf": [
+          {"name": "Physical Sciences", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50},
+          {"name": "Geography", "minMark": 50},
+          {"name": "Agricultural Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "b_earth_mining",
+      "name": "BSc Earth Sciences (Mining and Environmental Geology)",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 35,
+      "requirements": {
+        "subjects": [
+          {"name": "Mathematics", "minMark": 60},
+          {"name": "Physical Science", "minMark": 60},
+          {"name": "English", "minMark": 50}
+        ],
+        "anyThree": {
+          "minMark": 50,
+          "subjects": ["Agricultural Sciences", "Accounting", "Life Sciences", "Economics", "Geography"]
+        }
+      }
+    },
+    {
+      "id": "b_hydrology",
+      "name": "BSc Earth Sciences (Hydrology and Water Resources)",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 35,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 60},
+          {"name": "Mathematics", "minMark": 60},
+          {"name": "Physical Sciences", "minMark": 60}
+        ],
+        "anyThree": {
+          "minMark": 50,
+          "subjects": ["Agricultural Sciences", "Accounting", "Life Sciences", "Economics", "Geography"]
+        }
+      }
+    },
+    {
+      "id": "b_urban_planning",
+      "name": "Bachelor of Urban and Regional Planning",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 35,
+      "requirements": {
+        "subjects": [
+          {"name": "Physical Sciences", "minMark": 60},
+          {"name": "Mathematics", "minMark": 60},
+          {"name": "English", "minMark": 50},
+          {"name": "Technical Drawing", "minMark": 60},
+          {"name": "Geography", "minMark": 60}
+        ],
+        "anyThree": {
+          "minMark": 50,
+          "subjects": ["Agricultural Sciences", "Accounting", "Life Sciences", "Economics", "Geography"]
+        }
+      }
+    },
+    {
+      "id": "b_disaster_risk",
+      "name": "BSc Environmental Sciences (Disaster Risk Reduction)",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 35,
+      "requirements": {
+        "subjects": [
+          {"name": "Geography", "minMark": 60},
+          {"name": "Mathematics", "minMark": 60},
+          {"name": "Life Sciences", "minMark": 60},
+          {"name": "English", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bagri_economics",
+      "name": "BSc Agriculture (Agricultural Economics)",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Sciences", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50},
+          {"name": "Agricultural Sciences", "minMark": 50}
+        ],
+        "anyOf": [
+          {"name": "Life Sciences", "minMark": 50},
+          {"name": "Agricultural Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bagri_agribusiness",
+      "name": "BSc Agriculture (Agribusiness Management)",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bagri_animal",
+      "name": "BSc Agriculture (Animal Science)",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bagri_horticulture",
+      "name": "BSc Agriculture (Horticultural Sciences)",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "bagri_plant",
+      "name": "BSc Agriculture (Plant Production)",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "b_soil_science",
+      "name": "BSc Soil Science",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "b_forestry",
+      "name": "BSc Forestry",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50},
+          {"name": "Life Sciences", "minMark": 50}
+        ]
+      }
+    },
+    {
+      "id": "b_food_science",
+      "name": "BSc Food Science and Technology",
+      "facultyId": "science",
+      "qualification": "Degree",
+      "duration": 4,
+      "minAps": 26,
+      "requirements": {
+        "subjects": [
+          {"name": "English", "minMark": 50},
+          {"name": "Mathematics", "minMark": 50},
+          {"name": "Physical Science", "minMark": 50}
+        ],
+        "anyOf": [
+          {"name": "Life Sciences", "minMark": 50},
+          {"name": "Agricultural Sciences", "minMark": 50}
+        ]
+      }
+    }
+  ]
+}

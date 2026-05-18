@@ -1,0 +1,21 @@
+{
+  "universityId": "ul",
+  "faculties": [
+    {
+      "id": "humanities",
+      "name": "Faculty of Humanities"
+    },
+    {
+      "id": "science_agriculture",
+      "name": "Faculty of Science and Agriculture"
+    },
+    {
+      "id": "management_law",
+      "name": "Faculty of Management and Law"
+    },
+    {
+      "id": "health",
+      "name": "Faculty of Health Sciences"
+    }
+  ]
+}
