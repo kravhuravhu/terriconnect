@@ -11,14 +11,18 @@ class AnimatedToast {
   }) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     
-    OverlayState? overlayState = Overlay.of(context);
+    OverlayState overlayState = Overlay.of(context);
     OverlayEntry? overlayEntry;
     
     overlayEntry = OverlayEntry(
       builder: (context) => _AnimatedToastWidget(
         message: message,
         icon: icon,
-        backgroundColor: backgroundColor ?? (isDark ? Colors.grey.shade800 : Colors.black87),
+        backgroundColor: backgroundColor ??
+          (isDark
+              ? Theme.of(context).colorScheme.surface
+            : AppTheme.primaryOrange),
+        
         duration: duration,
         onDismiss: () {
           overlayEntry?.remove();
@@ -26,7 +30,7 @@ class AnimatedToast {
       ),
     );
     
-    overlayState?.insert(overlayEntry);
+    overlayState.insert(overlayEntry);
   }
 }
 
@@ -118,7 +122,7 @@ class _AnimatedToastWidgetState extends State<_AnimatedToastWidget>
               borderRadius: BorderRadius.circular(30),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
+                  color: Colors.black.withValues(alpha: 0.2),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
@@ -131,7 +135,11 @@ class _AnimatedToastWidgetState extends State<_AnimatedToastWidget>
                 Expanded(
                   child: Text(
                     widget.message,
-                    style: const TextStyle(color: Colors.white, fontSize: 14),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ],
