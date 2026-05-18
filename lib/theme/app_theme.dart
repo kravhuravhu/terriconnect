@@ -39,20 +39,28 @@ class AppTheme {
     useMaterial3: true,
     brightness: Brightness.dark,
     primaryColor: primaryOrange,
-    colorScheme: const ColorScheme.dark(
+
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: primaryOrange,
+      brightness: Brightness.dark,
       primary: primaryOrange,
       secondary: accentBlue,
       tertiary: successGreen,
-      surface: Color(0xFF1E1E2E),
-      background: Color(0xFF121212),
+      surface: const Color(0xFF1E1E2E),
     ),
+
     fontFamily: GoogleFonts.ubuntu().fontFamily,
+    textTheme: GoogleFonts.ubuntuTextTheme(
+      ThemeData.dark().textTheme,
+    ),
+
     appBarTheme: const AppBarTheme(
       elevation: 0,
       centerTitle: true,
       backgroundColor: Colors.transparent,
       foregroundColor: primaryOrange,
     ),
+
     cardTheme: CardThemeData(
       elevation: 4,
       shape: RoundedRectangleBorder(
