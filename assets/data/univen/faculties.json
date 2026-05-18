@@ -1,0 +1,21 @@
+{
+  "universityId": "univen",
+  "faculties": [
+    {
+      "id": "humanities",
+      "name": "Humanities, Social Sciences and Education"
+    },
+    {
+      "id": "health",
+      "name": "Health Sciences"
+    },
+    {
+      "id": "commerce",
+      "name": "Management, Commerce and Law"
+    },
+    {
+      "id": "science",
+      "name": "Science, Engineering and Agriculture"
+    }
+  ]
+}
