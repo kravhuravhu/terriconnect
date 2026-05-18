@@ -41,51 +41,61 @@ class HomeScreen extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              // Header
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        shape: BoxShape.circle,
+              // Header with fade animation
+              FadeTransition(
+                opacity: AlwaysStoppedAnimation(1.0),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.2),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.school_rounded,
+                          color: Colors.white,
+                        ),
                       ),
-                      child: const Icon(
-                        Icons.school_rounded,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Welcome back!',
-                            style: GoogleFonts.ubuntu(
-                              fontSize: 12,
-                              color: Colors.white.withOpacity(0.8),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Welcome back!',
+                              style: GoogleFonts.ubuntu(
+                                fontSize: 12,
+                                color: Colors.white.withValues(alpha: 0.8),
+                              ),
                             ),
-                          ),
-                          Text(
-                            'Future Graduate',
-                            style: GoogleFonts.ubuntu(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                            Text(
+                              'Future Graduate',
+                              style: GoogleFonts.ubuntu(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.notifications_none, color: Colors.white),
-                    ),
-                  ],
+                      IconButton(
+                        onPressed: () {
+                          Haptics.light();
+                          AnimatedToast.show(
+                            context: context,
+                            message: 'Notifications coming soon!',
+                            icon: Icons.notifications,
+                          );
+                        },
+                        icon: const Icon(Icons.notifications_none, color: Colors.white),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               
@@ -94,25 +104,31 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   children: [
-                    _buildStatCard(
-                      'Your APS',
-                      '--',
-                      Icons.calculate_outlined,
-                      context,
+                    Expanded(
+                      child: _buildAnimatedStatCard(
+                        'Your APS',
+                        '--',
+                        Icons.calculate_outlined,
+                        context,
+                      ),
                     ),
                     const SizedBox(width: 12),
-                    _buildStatCard(
-                      'Universities',
-                      '26',
-                      Icons.school_outlined,
-                      context,
+                    Expanded(
+                      child: _buildAnimatedStatCard(
+                        'Universities',
+                        '26',
+                        Icons.school_outlined,
+                        context,
+                      ),
                     ),
                     const SizedBox(width: 12),
-                    _buildStatCard(
-                      'Courses',
-                      '500+',
-                      Icons.book_outlined,
-                      context,
+                    Expanded(
+                      child: _buildAnimatedStatCard(
+                        'Courses',
+                        '500+',
+                        Icons.book_outlined,
+                        context,
+                      ),
                     ),
                   ],
                 ),
@@ -132,44 +148,67 @@ class HomeScreen extends StatelessWidget {
                       mainAxisSpacing: 16,
                     ),
                     children: [
-                      _MenuCard(
-                        icon: Icons.calculate_outlined,
-                        title: 'APS\nCalculator',
-                        subtitle: 'Calculate your score',
+                      AnimatedCard(
                         onTap: () {
-                          Haptics.medium(); 
+                          Haptics.medium();
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (_) => const ApsCalculatorScreen()),
+                            Animations.scaleTransition(const ApsCalculatorScreen()),
                           );
                         },
+                        child: _buildMenuCardContent(
+                          Icons.calculate_outlined,
+                          'APS\nCalculator',
+                          'Calculate your score',
+                          isDark,
+                        ),
                       ),
-                      _MenuCard(
-                        icon: Icons.school_outlined,
-                        title: 'Universities',
-                        subtitle: 'Browse by province',
+                      AnimatedCard(
                         onTap: () {
+                          Haptics.medium();
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (_) => const UniversitiesScreen()),
+                            Animations.scaleTransition(const UniversitiesScreen()),
                           );
                         },
+                        child: _buildMenuCardContent(
+                          Icons.school_outlined,
+                          'Universities',
+                          'Browse by province',
+                          isDark,
+                        ),
                       ),
-                      _MenuCard(
-                        icon: Icons.insights_outlined,
-                        title: 'My Results',
-                        subtitle: 'Track progress',
+                      AnimatedCard(
                         onTap: () {
-                          _showComingSoonSnackbar(context);
+                          Haptics.light();
+                          AnimatedToast.show(
+                            context: context,
+                            message: 'My Results - Coming soon!',
+                            icon: Icons.insights,
+                          );
                         },
+                        child: _buildMenuCardContent(
+                          Icons.insights_outlined,
+                          'My Results',
+                          'Track progress',
+                          isDark,
+                        ),
                       ),
-                      _MenuCard(
-                        icon: Icons.book_outlined,
-                        title: 'Courses',
-                        subtitle: 'Find matches',
+                      AnimatedCard(
                         onTap: () {
-                          _showComingSoonSnackbar(context);
+                          Haptics.light();
+                          AnimatedToast.show(
+                            context: context,
+                            message: 'Courses - Coming soon!',
+                            icon: Icons.book,
+                          );
                         },
+                        child: _buildMenuCardContent(
+                          Icons.book_outlined,
+                          'Courses',
+                          'Find matches',
+                          isDark,
+                        ),
                       ),
                     ],
                   ),
@@ -182,8 +221,8 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                 decoration: BoxDecoration(
                   color: isDark 
-                      ? const Color(0xFF1E1E2E).withOpacity(0.9)
-                      : Colors.black.withOpacity(0.05),
+                      ? const Color(0xFF1E1E2E).withValues(alpha: 0.9)
+                      : Colors.black.withValues(alpha: 0.05),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),
@@ -191,50 +230,60 @@ class HomeScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    // Footer links row
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         _FooterLink(
                           icon: Icons.info_outline,
                           label: 'About',
-                          onTap: () => _showBlurredDialog(
-                            context, 
-                            _buildAboutContent(context),
-                            'About TerriConnect',
-                          ),
+                          onTap: () {
+                            Haptics.selection();
+                            _showBlurredDialog(
+                              context, 
+                              _buildAboutContent(context),
+                              'About TerriConnect',
+                            );
+                          },
                         ),
                         _FooterLink(
                           icon: Icons.privacy_tip_outlined,
                           label: 'Privacy',
-                          onTap: () => _showBlurredDialog(
-                            context, 
-                            _buildPrivacyContent(context),
-                            'Privacy Policy',
-                          ),
+                          onTap: () {
+                            Haptics.selection();
+                            _showBlurredDialog(
+                              context, 
+                              _buildPrivacyContent(context),
+                              'Privacy Policy',
+                            );
+                          },
                         ),
                         _FooterLink(
                           icon: Icons.contact_support_outlined,
                           label: 'Support',
-                          onTap: () => _showBlurredDialog(
-                            context, 
-                            _buildSupportContent(context),
-                            'Support',
-                          ),
+                          onTap: () {
+                            Haptics.selection();
+                            _showBlurredDialog(
+                              context, 
+                              _buildSupportContent(context),
+                              'Support',
+                            );
+                          },
                         ),
                         _FooterLink(
                           icon: Icons.share_outlined,
                           label: 'Share',
-                          onTap: () => _showBlurredDialog(
-                            context, 
-                            _buildShareContent(context),
-                            'Share TerriConnect',
-                          ),
+                          onTap: () {
+                            Haptics.selection();
+                            _showBlurredDialog(
+                              context, 
+                              _buildShareContent(context),
+                              'Share TerriConnect',
+                            );
+                          },
                         ),
                       ],
                     ),
                     const SizedBox(height: 12),
-                    // Copyright text
                     Text(
                       '© 2026 TerriConnect | Connect to Your Future',
                       style: GoogleFonts.ubuntu(
@@ -260,91 +309,123 @@ class HomeScreen extends StatelessWidget {
     );
   }
   
-  Widget _buildStatCard(String label, String value, IconData icon, BuildContext context) {
+  // animated stat card
+  Widget _buildAnimatedStatCard(String label, String value, IconData icon, BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: isDark ? Colors.black.withOpacity(0.3) : Colors.white.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: Colors.white.withOpacity(0.2),
+    return TweenAnimationBuilder(
+      tween: Tween<double>(begin: 0.0, end: 1.0),
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeOutBack,
+      builder: (context, scale, child) {
+        return Transform.scale(
+          scale: scale,
+          child: child,
+        );
+      },
+
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: isDark ? Colors.black.withValues(alpha: 0.3) : Colors.white.withValues(alpha: 0.2),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Colors.white.withValues(alpha: 0.2),
+            ),
+          ),
+          child: Column(
+            children: [
+              Icon(icon, size: 24, color: Colors.white),
+              const SizedBox(height: 8),
+              Text(
+                value,
+                style: GoogleFonts.ubuntu(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                label,
+                style: GoogleFonts.ubuntu(
+                  fontSize: 11,
+                  color: Colors.white.withValues(alpha: 0.7),
+                ),
+              ),
+            ],
           ),
         ),
-        child: Column(
-          children: [
-            Icon(icon, size: 24, color: Colors.white),
-            const SizedBox(height: 8),
-            Text(
-              value,
-              style: GoogleFonts.ubuntu(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-            Text(
-              label,
-              style: GoogleFonts.ubuntu(
-                fontSize: 11,
-                color: Colors.white.withOpacity(0.7),
-              ),
-            ),
-          ],
+
+    );
+  }
+  
+  // Menu card content
+  Widget _buildMenuCardContent(IconData icon, String title, String subtitle, bool isDark) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          icon,
+          size: 48,
+          color: isDark ? AppTheme.primaryOrange : AppTheme.primaryOrange,
         ),
-      ),
+        const SizedBox(height: 12),
+        Text(
+          title,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.ubuntu(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: isDark ? Colors.white : Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          subtitle,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.ubuntu(
+            fontSize: 11,
+            color: isDark ? Colors.white54 : Colors.black54,
+          ),
+        ),
+      ],
     );
   }
   
-  void _showComingSoonSnackbar(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Coming soon!'),
-        backgroundColor: AppTheme.primaryOrange,
-        behavior: SnackBarBehavior.floating,
-        duration: Duration(seconds: 2),
-      ),
-    );
-  }
-  
-  // ============= BLUR DIALOG METHOD =============
+  // blur dialog
   void _showBlurredDialog(BuildContext context, Widget content, String title) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     
     showDialog(
       context: context,
-      barrierColor: Colors.black.withOpacity(0.5), // Darker barrier
+      barrierColor: Colors.black.withValues(alpha: 0.5),
       builder: (context) => Dialog(
         backgroundColor: Colors.transparent,
         insetPadding: const EdgeInsets.symmetric(horizontal: 24),
         child: Container(
           decoration: BoxDecoration(
-            // Glassmorphic blurred effect
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
                 isDark 
-                    ? const Color(0xFF1E1E2E).withOpacity(0.95)
-                    : Colors.white.withOpacity(0.95),
+                    ? const Color(0xFF1E1E2E).withValues(alpha: 0.95)
+                    : Colors.white.withValues(alpha: 0.95),
                 isDark 
-                    ? const Color(0xFF2C2C3E).withOpacity(0.95)
-                    : Colors.white.withOpacity(0.9),
+                    ? const Color(0xFF2C2C3E).withValues(alpha: 0.95)
+                    : Colors.white.withValues(alpha: 0.9),
               ],
             ),
             borderRadius: BorderRadius.circular(28),
             border: Border.all(
               color: isDark 
-                  ? Colors.white.withOpacity(0.1)
-                  : AppTheme.primaryOrange.withOpacity(0.2),
+                  ? Colors.white.withValues(alpha: 0.1)
+                  : AppTheme.primaryOrange.withValues(alpha: 0.2),
               width: 1,
             ),
-            // Backdrop blur effect
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.3),
+                color: Colors.black.withValues(alpha: 0.3),
                 blurRadius: 20,
                 spreadRadius: 5,
               ),
@@ -362,11 +443,11 @@ class HomeScreen extends StatelessWidget {
                     end: Alignment.bottomRight,
                     colors: [
                       isDark 
-                          ? const Color(0xFF1E1E2E).withOpacity(0.7)
-                          : Colors.white.withOpacity(0.7),
+                          ? const Color(0xFF1E1E2E).withValues(alpha: 0.7)
+                          : Colors.white.withValues(alpha: 0.7),
                       isDark 
-                          ? const Color(0xFF2C2C3E).withOpacity(0.7)
-                          : Colors.white.withOpacity(0.6),
+                          ? const Color(0xFF2C2C3E).withValues(alpha: 0.7)
+                          : Colors.white.withValues(alpha: 0.6),
                     ],
                   ),
                   borderRadius: BorderRadius.circular(28),
@@ -374,7 +455,6 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Title
                     Text(
                       title,
                       style: GoogleFonts.ubuntu(
@@ -384,20 +464,17 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    // Divider
                     Container(
                       width: 50,
                       height: 3,
                       decoration: BoxDecoration(
-                        color: AppTheme.primaryOrange.withOpacity(0.5),
+                        color: AppTheme.primaryOrange.withValues(alpha: 0.5),
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
                     const SizedBox(height: 20),
-                    // Content
                     content,
                     const SizedBox(height: 24),
-                    // Close button
                     ElevatedButton(
                       onPressed: () => Navigator.pop(context),
                       style: ElevatedButton.styleFrom(
@@ -420,8 +497,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
   
-  // ============= DIALOG CONTENT BUILDERS =============
-  
+  // Dialog content builders
   Widget _buildAboutContent(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     
@@ -432,7 +508,7 @@ class HomeScreen extends StatelessWidget {
           width: 70,
           height: 70,
           decoration: BoxDecoration(
-            color: AppTheme.primaryOrange.withOpacity(0.1),
+            color: AppTheme.primaryOrange.withValues(alpha: 0.1),
             shape: BoxShape.circle,
           ),
           child: Icon(
@@ -489,7 +565,7 @@ class HomeScreen extends StatelessWidget {
           width: 70,
           height: 70,
           decoration: BoxDecoration(
-            color: AppTheme.primaryOrange.withOpacity(0.1),
+            color: AppTheme.primaryOrange.withValues(alpha: 0.1),
             shape: BoxShape.circle,
           ),
           child: Icon(
@@ -544,7 +620,7 @@ class HomeScreen extends StatelessWidget {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: AppTheme.primaryOrange.withOpacity(0.1),
+            color: AppTheme.primaryOrange.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(icon, size: 20, color: AppTheme.primaryOrange),
@@ -586,7 +662,7 @@ class HomeScreen extends StatelessWidget {
           width: 70,
           height: 70,
           decoration: BoxDecoration(
-            color: AppTheme.primaryOrange.withOpacity(0.1),
+            color: AppTheme.primaryOrange.withValues(alpha: 0.1),
             shape: BoxShape.circle,
           ),
           child: Icon(
@@ -638,7 +714,7 @@ class HomeScreen extends StatelessWidget {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: AppTheme.primaryOrange.withOpacity(0.1),
+            color: AppTheme.primaryOrange.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(icon, size: 20, color: AppTheme.primaryOrange),
@@ -687,7 +763,7 @@ class HomeScreen extends StatelessWidget {
           width: 70,
           height: 70,
           decoration: BoxDecoration(
-            color: AppTheme.primaryOrange.withOpacity(0.1),
+            color: AppTheme.primaryOrange.withValues(alpha: 0.1),
             shape: BoxShape.circle,
           ),
           child: Icon(
@@ -730,6 +806,7 @@ class HomeScreen extends StatelessWidget {
     return Expanded(
       child: GestureDetector(
         onTap: () {
+          Haptics.light();
           // Share functionality coming soon
         },
         child: Column(
@@ -737,7 +814,7 @@ class HomeScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
+                color: color.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(icon, size: 28, color: color),
@@ -748,83 +825,6 @@ class HomeScreen extends StatelessWidget {
               style: GoogleFonts.ubuntu(
                 fontSize: 11,
                 color: Colors.grey,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _MenuCard extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final VoidCallback onTap;
-  
-  const _MenuCard({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.onTap,
-  });
-  
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: isDark
-                ? [
-                    const Color(0xFF2C2C3E),
-                    const Color(0xFF1E1E2E),
-                  ]
-                : [
-                    Colors.white.withOpacity(0.95),
-                    Colors.white.withOpacity(0.85),
-                  ],
-          ),
-          borderRadius: BorderRadius.circular(24),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: 48,
-              color: isDark ? AppTheme.primaryOrange : AppTheme.primaryOrange,
-            ),
-            const SizedBox(height: 12),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.ubuntu(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: isDark ? Colors.white : Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              subtitle,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.ubuntu(
-                fontSize: 11,
-                color: isDark ? Colors.white54 : Colors.black54,
               ),
             ),
           ],
@@ -851,22 +851,29 @@ class _FooterLink extends StatelessWidget {
     
     return GestureDetector(
       onTap: onTap,
-      child: Column(
-        children: [
-          Icon(
-            icon,
-            size: 20,
-            color: isDark ? Colors.white60 : Colors.white,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: GoogleFonts.ubuntu(
-              fontSize: 11,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          children: [
+            Icon(
+              icon,
+              size: 20,
               color: isDark ? Colors.white60 : Colors.white,
             ),
-          ),
-        ],
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: GoogleFonts.ubuntu(
+                fontSize: 11,
+                color: isDark ? Colors.white60 : Colors.white,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

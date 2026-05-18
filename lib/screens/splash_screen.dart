@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 import '../widgets/tilted_card.dart';
 import 'home_screen.dart';
+import '../utils/haptics.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -41,9 +42,20 @@ class _SplashScreenState extends State<SplashScreen>
     // Navigate to home after 3 seconds
     Timer(const Duration(seconds: 3), () {
       if (mounted) {
+        Haptics.success();
+
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const HomeScreen()),
+          PageRouteBuilder(
+            transitionDuration: const Duration(milliseconds: 550),
+            pageBuilder: (_, animation, __) => const HomeScreen(),
+            transitionsBuilder: (_, animation, __, child) {
+              return ScaleTransition(
+                scale: animation,
+                child: child,
+              );
+            },
+          ),
         );
       }
     });
