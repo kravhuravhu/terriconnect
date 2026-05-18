@@ -13,7 +13,7 @@ class Animations {
           child: child,
         );
       },
-      transitionDuration: const Duration(milliseconds: 300),
+      transitionDuration: const Duration(milliseconds: 700),
     );
   }
   
@@ -33,7 +33,7 @@ class Animations {
           child: child,
         );
       },
-      transitionDuration: const Duration(milliseconds: 400),
+      transitionDuration: const Duration(milliseconds: 700),
     );
   }
   
@@ -73,7 +73,7 @@ class Animations {
           ),
         );
       },
-      transitionDuration: const Duration(milliseconds: 600),
+      transitionDuration: const Duration(milliseconds: 800),
     );
   }
 }
@@ -103,7 +103,7 @@ class ShimmerLoading extends StatelessWidget {
   }
 }
 
-// Simple shimmer widget (custom implementation without external package)
+// Simple shimmer widget
 class Shimmer extends StatefulWidget {
   final Duration period;
   final Gradient gradient;

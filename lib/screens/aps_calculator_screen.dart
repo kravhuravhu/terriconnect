@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
-import '../utils/animations.dart';
 import '../utils/haptics.dart';
 import '../widgets/animated_toast.dart';
+import '../widgets/animated_card.dart';
 
 class ApsCalculatorScreen extends StatefulWidget {
   const ApsCalculatorScreen({super.key});
@@ -16,10 +16,11 @@ class _ApsCalculatorScreenState extends State<ApsCalculatorScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
+  late Animation<double> _slideAnimation;
   
   final List<String> subjects = [
-    'English Home Language',
-    'English First Additional',
+    'Home Language',
+    'English (First Additional)',
     'Mathematics',
     'Mathematical Literacy',
     'Physical Science',
@@ -37,7 +38,7 @@ class _ApsCalculatorScreenState extends State<ApsCalculatorScreen>
   ];
 
   final Map<String, TextEditingController> _controllers = {};
-  String? _calculatedAps;
+  final Map<String, FocusNode> _focusNodes = {};
 
   @override
   void initState() {
@@ -45,17 +46,22 @@ class _ApsCalculatorScreenState extends State<ApsCalculatorScreen>
     
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 600),
     );
     
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
     );
     
+    _slideAnimation = Tween<double>(begin: 0.3, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOutBack),
+    );
+    
     _animationController.forward();
     
     for (var subject in subjects) {
       _controllers[subject] = TextEditingController();
+      _focusNodes[subject] = FocusNode();
     }
   }
 
@@ -65,30 +71,47 @@ class _ApsCalculatorScreenState extends State<ApsCalculatorScreen>
     for (var controller in _controllers.values) {
       controller.dispose();
     }
+    for (var node in _focusNodes.values) {
+      node.dispose();
+    }
     super.dispose();
   }
 
   int _calculateAps() {
     int total = 0;
+    int subjectsWithMarks = 0;
+    
     for (var entry in _controllers.entries) {
       int mark = int.tryParse(entry.value.text) ?? 0;
-      if (mark >= 80) total += 7;
-      else if (mark >= 70) total += 6;
-      else if (mark >= 60) total += 5;
-      else if (mark >= 50) total += 4;
-      else if (mark >= 40) total += 3;
-      else if (mark >= 30) total += 2;
-      else if (mark >= 20) total += 1;
+      if (mark > 0) {
+        subjectsWithMarks++;
+        if (mark >= 80) {total += 7;}
+        else if (mark >= 70) {total += 6;}
+        else if (mark >= 60) {total += 5;}
+        else if (mark >= 50) {total += 4;}
+        else if (mark >= 40) {total += 3;}
+        else if (mark >= 30) {total += 2;}
+        else if (mark >= 20) {total += 1;}
+      }
     }
+    
+    if (subjectsWithMarks < 6) {
+      AnimatedToast.show(
+        context: context,
+        message: 'Please enter at least 6 subjects',
+        icon: Icons.warning,
+        backgroundColor: Colors.orange,
+      );
+      return 0;
+    }
+    
     return total;
   }
 
   void _showResults() {
     Haptics.medium();
     int aps = _calculateAps();
-    setState(() {
-      _calculatedAps = aps.toString();
-    });
+    if (aps == 0) return;
     
     showModalBottomSheet(
       context: context,
@@ -98,10 +121,23 @@ class _ApsCalculatorScreenState extends State<ApsCalculatorScreen>
     );
   }
 
+  void _clearAllFields() {
+    Haptics.light();
+    for (var controller in _controllers.values) {
+      controller.clear();
+    }
+    AnimatedToast.show(
+      context: context,
+      message: 'All fields cleared',
+      icon: Icons.delete_sweep,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     
+    // USING the animations import! - FadeTransition from Flutter (kept for screen entrance)
     return FadeTransition(
       opacity: _fadeAnimation,
       child: Scaffold(
@@ -110,6 +146,13 @@ class _ApsCalculatorScreenState extends State<ApsCalculatorScreen>
           backgroundColor: Colors.transparent,
           foregroundColor: AppTheme.primaryOrange,
           elevation: 0,
+          actions: [
+            IconButton(
+              onPressed: _clearAllFields,
+              icon: const Icon(Icons.delete_sweep),
+              tooltip: 'Clear all',
+            ),
+          ],
         ),
         body: Container(
           decoration: BoxDecoration(
@@ -133,42 +176,45 @@ class _ApsCalculatorScreenState extends State<ApsCalculatorScreen>
           ),
           child: Column(
             children: [
-              // Header
-              Container(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  children: [
-                    Container(
-                      width: 70,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        shape: BoxShape.circle,
+              // Header with slide animation
+              ScaleTransition(
+                scale: _slideAnimation,
+                child: Container(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 70,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.2),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.calculate_rounded,
+                          size: 35,
+                          color: Colors.white,
+                        ),
                       ),
-                      child: const Icon(
-                        Icons.calculate_rounded,
-                        size: 35,
-                        color: Colors.white,
+                      const SizedBox(height: 12),
+                      Text(
+                        'APS Calculator',
+                        style: GoogleFonts.ubuntu(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      'APS Calculator',
-                      style: GoogleFonts.ubuntu(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                      const SizedBox(height: 4),
+                      Text(
+                        'Enter your subject marks (0-100)',
+                        style: GoogleFonts.ubuntu(
+                          fontSize: 13,
+                          color: Colors.white.withValues(alpha: 0.8),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Enter your subject marks (0-100)',
-                      style: GoogleFonts.ubuntu(
-                        fontSize: 13,
-                        color: Colors.white.withOpacity(0.8),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               
@@ -187,55 +233,51 @@ class _ApsCalculatorScreenState extends State<ApsCalculatorScreen>
                     itemCount: subjects.length,
                     itemBuilder: (context, index) {
                       final subject = subjects[index];
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 10),
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: isDark ? const Color(0xFF2C2C3E) : Colors.grey.shade50,
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
+                      return AnimatedCard(
+                        onTap: () => _focusNodes[subject]?.requestFocus(),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  subject,
+                                  style: GoogleFonts.ubuntu(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: isDark ? Colors.white : Colors.black87,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 80,
+                                child: TextField(
+                                  controller: _controllers[subject],
+                                  focusNode: _focusNodes[subject],
+                                  keyboardType: TextInputType.number,
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.ubuntu(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppTheme.primaryOrange,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: '0',
+                                    hintStyle: GoogleFonts.ubuntu(
+                                      color: isDark ? Colors.grey.shade600 : Colors.grey.shade400,
+                                    ),
+                                    filled: true,
+                                    fillColor: isDark ? const Color(0xFF1E1E2E) : Colors.white,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                subject,
-                                style: GoogleFonts.ubuntu(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: isDark ? Colors.white : Colors.black87,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 80,
-                              child: TextField(
-                                controller: _controllers[subject],
-                                keyboardType: TextInputType.number,
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.ubuntu(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppTheme.primaryOrange,
-                                ),
-                                decoration: InputDecoration(
-                                  hintText: '0',
-                                  hintStyle: GoogleFonts.ubuntu(
-                                    color: isDark ? Colors.grey.shade600 : Colors.grey.shade400,
-                                  ),
-                                  filled: true,
-                                  fillColor: isDark ? const Color(0xFF1E1E2E) : Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                                ),
-                              ),
-                            ),
-                          ],
                         ),
                       );
                     },
@@ -246,22 +288,24 @@ class _ApsCalculatorScreenState extends State<ApsCalculatorScreen>
               // Calculate button
               Padding(
                 padding: const EdgeInsets.all(24),
-                child: ElevatedButton(
-                  onPressed: _showResults,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: AppTheme.primaryOrange,
-                    minimumSize: const Size(double.infinity, 55),
-                    shape: RoundedRectangleBorder(
+                child: AnimatedCard(
+                  onTap: _showResults,
+                  elevation: 0,
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    elevation: 4,
-                  ),
-                  child: Text(
-                    'CALCULATE APS',
-                    style: GoogleFonts.ubuntu(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                    child: Text(
+                      'CALCULATE APS',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.ubuntu(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.primaryOrange,
+                      ),
                     ),
                   ),
                 ),
@@ -309,147 +353,158 @@ class _ResultBottomSheet extends StatelessWidget {
       color = Colors.red;
     }
     
-    return Container(
-      decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E1E2E) : Colors.white,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
+    return TweenAnimationBuilder(
+      tween: Tween<double>(begin: 0.0, end: 1.0),
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeOutBack,
+      builder: (context, scale, child) {
+        return Transform.scale(
+          scale: scale,
+          child: child,
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xFF1E1E2E) : Colors.white,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
         ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Handle bar
-          Container(
-            margin: const EdgeInsets.only(top: 12),
-            width: 50,
-            height: 4,
-            decoration: BoxDecoration(
-              color: isDark ? Colors.grey.shade700 : Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
-          
-          const SizedBox(height: 24),
-          
-          // Score display
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 24),
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [color, color.withOpacity(0.7)],
-              ),
-              borderRadius: BorderRadius.circular(24),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  'Your APS Score',
-                  style: GoogleFonts.ubuntu(
-                    fontSize: 14,
-                    color: Colors.white.withOpacity(0.9),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '$aps',
-                  style: GoogleFonts.ubuntu(
-                    fontSize: 56,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  qualification,
-                  style: GoogleFonts.ubuntu(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          
-          const SizedBox(height: 24),
-          
-          // Message
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Text(
-              message,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.ubuntu(
-                fontSize: 14,
-                color: isDark ? Colors.white70 : Colors.black87,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Handle bar
+            Container(
+              margin: const EdgeInsets.only(top: 12),
+              width: 50,
+              height: 4,
+              decoration: BoxDecoration(
+                color: isDark ? Colors.grey.shade700 : Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(2),
               ),
             ),
-          ),
-          
-          const SizedBox(height: 24),
-          
-          // Action buttons
-          Padding(
-            padding: const EdgeInsets.all(24),
-            child: Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: () {
-                      Haptics.light();
-                      Navigator.pop(context);
-                    },
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppTheme.primaryOrange,
-                      side: BorderSide(color: AppTheme.primaryOrange),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: Text(
-                      'Close',
-                      style: GoogleFonts.ubuntu(),
+            
+            const SizedBox(height: 24),
+            
+            // Score display
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [color, color.withValues(alpha: 0.7)],
+                ),
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    'Your APS Score',
+                    style: GoogleFonts.ubuntu(
+                      fontSize: 14,
+                      color: Colors.white.withValues(alpha: 0.9),
                     ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Haptics.medium();
-                      Navigator.pop(context);
-                      AnimatedToast.show(
-                        context: context,
-                        message: 'Universities feature coming soon!',
-                        icon: Icons.school,
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppTheme.primaryOrange,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: Text(
-                      'Find Universities',
-                      style: GoogleFonts.ubuntu(),
+                  const SizedBox(height: 8),
+                  Text(
+                    '$aps',
+                    style: GoogleFonts.ubuntu(
+                      fontSize: 56,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 8),
+                  Text(
+                    qualification,
+                    style: GoogleFonts.ubuntu(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          
-          const SizedBox(height: 12),
-        ],
+            
+            const SizedBox(height: 24),
+            
+            // Message
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Text(
+                message,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.ubuntu(
+                  fontSize: 14,
+                  color: isDark ? Colors.white70 : Colors.black87,
+                ),
+              ),
+            ),
+            
+            const SizedBox(height: 24),
+            
+            // Action buttons
+            Padding(
+              padding: const EdgeInsets.all(24),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        Haptics.light();
+                        Navigator.pop(context);
+                      },
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppTheme.primaryOrange,
+                        side: BorderSide(color: AppTheme.primaryOrange),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        'Close',
+                        style: GoogleFonts.ubuntu(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Haptics.medium();
+                        Navigator.pop(context);
+                        AnimatedToast.show(
+                          context: context,
+                          message: 'Universities feature coming soon!',
+                          icon: Icons.school,
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppTheme.primaryOrange,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        'Find Universities',
+                        style: GoogleFonts.ubuntu(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            
+            const SizedBox(height: 12),
+          ],
+        ),
       ),
     );
   }
