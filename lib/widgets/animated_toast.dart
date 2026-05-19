@@ -18,10 +18,7 @@ class AnimatedToast {
       builder: (context) => _AnimatedToastWidget(
         message: message,
         icon: icon,
-        backgroundColor: backgroundColor ??
-          (isDark
-              ? Theme.of(context).colorScheme.surface
-            : AppTheme.primaryOrange),
+        backgroundColor: backgroundColor ?? (isDark ? Colors.grey.shade800 : Colors.black87),
         
         duration: duration,
         onDismiss: () {

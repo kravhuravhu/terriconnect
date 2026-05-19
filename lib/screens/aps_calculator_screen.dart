@@ -4,6 +4,7 @@ import '../theme/app_theme.dart';
 import '../utils/haptics.dart';
 import '../widgets/animated_toast.dart';
 import '../widgets/animated_card.dart';
+import 'results_screen.dart';
 
 class ApsCalculatorScreen extends StatefulWidget {
   const ApsCalculatorScreen({super.key});
@@ -39,6 +40,9 @@ class _ApsCalculatorScreenState extends State<ApsCalculatorScreen>
 
   final Map<String, TextEditingController> _controllers = {};
   final Map<String, FocusNode> _focusNodes = {};
+  
+  // Store marks to pass to results screen
+  Map<String, int> _lastMarks = {};
 
   @override
   void initState() {
@@ -107,17 +111,42 @@ class _ApsCalculatorScreenState extends State<ApsCalculatorScreen>
     
     return total;
   }
+  
+  // Get marks map from entered values
+  Map<String, int> _getMarksMap() {
+    Map<String, int> marks = {};
+    for (var entry in _controllers.entries) {
+      int mark = int.tryParse(entry.value.text) ?? 0;
+      if (mark > 0) {
+        marks[entry.key] = mark;
+      }
+    }
+    return marks;
+  }
 
   void _showResults() {
     Haptics.medium();
     int aps = _calculateAps();
     if (aps == 0) return;
     
+    _lastMarks = _getMarksMap();
+    
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => _ResultBottomSheet(aps: aps),
+      builder: (context) => _ResultBottomSheet(
+        aps: aps,
+        onShowMatches: () {
+          Navigator.pop(context); // Close bottom sheet
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ResultsScreen(studentMarks: _lastMarks),
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -137,7 +166,6 @@ class _ApsCalculatorScreenState extends State<ApsCalculatorScreen>
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     
-    // USING the animations import! - FadeTransition from Flutter (kept for screen entrance)
     return FadeTransition(
       opacity: _fadeAnimation,
       child: Scaffold(
@@ -318,11 +346,15 @@ class _ApsCalculatorScreenState extends State<ApsCalculatorScreen>
   }
 }
 
-// Result Bottom Sheet
+// Result Bottom Sheet - Now with "Show Matches" button
 class _ResultBottomSheet extends StatelessWidget {
   final int aps;
+  final VoidCallback onShowMatches;
   
-  const _ResultBottomSheet({required this.aps});
+  const _ResultBottomSheet({
+    required this.aps,
+    required this.onShowMatches,
+  });
   
   @override
   Widget build(BuildContext context) {
@@ -477,12 +509,7 @@ class _ResultBottomSheet extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         Haptics.medium();
-                        Navigator.pop(context);
-                        AnimatedToast.show(
-                          context: context,
-                          message: 'Universities feature coming soon!',
-                          icon: Icons.school,
-                        );
+                        onShowMatches();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppTheme.primaryOrange,
@@ -493,8 +520,10 @@ class _ResultBottomSheet extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        'Find Universities',
-                        style: GoogleFonts.ubuntu(),
+                        'SHOW MATCHES',
+                        style: GoogleFonts.ubuntu(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
